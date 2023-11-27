@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue.js Todo App</title>
+  <!-- Include Vue.js from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    li {
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: rgb(138, 196, 196);
+        margin: 5px 0px;
+        padding: 5px;
+        color: rgb(0, 119, 119);
+        border-radius: 10px;
+    }
+    #app {
+        padding: 20px;
+        width: fit-content;
+    }
+    ul>li>button {
+        padding: 5px;
+        color: rgb(0, 119, 119);
+        background-color: #ffffff00;
+        border: none;
+    }
+  </style>
+</head>
+<body>
+
+    <div id="app">
+        <div>
+            <form @submit.prevent="addTodo">
+                <input v-model="newTodo" type="text">
+                <button>Add Todo</button> 
+            </form>
+            <ul>
+                <li v-for="todo in todos" :key="todo.id">
+                    {{ todo.text }}
+                    <button @click="removeTodo(todo)"> X </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let id = 0
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    newTodo: '',
+                    todos: [
+                        { id: id++, text: 'apple' },
+                        { id: id++, text: 'banana' },
+                        { id: id++, text: 'orange' }
+                    ]
+                }
+            },
+            methods: {
+                addTodo() {
+                    this.todos.push({ id: id++, text: this.newTodo })
+                    this.newTodo = ''
+                },
+                removeTodo(todo) {
+                    this.todos = this.todos.filter(t => t !== todo)
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

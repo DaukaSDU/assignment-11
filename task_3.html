@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+<body>
+    
+    <div id="app">
+        <form @submit.prevent="sayHi">
+            <input v-model="username" type="text" placeholder="username">
+            <button>OK</button>
+        </form>
+        <h3>{{ message }}</h3>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    username: '',
+                    message: ''
+                }
+            },
+            methods: {
+                sayHi() {
+                    this.message = 'Hello ' + this.username
+                }
+            }
+        })
+    </script>
+
+</body>
+</html>

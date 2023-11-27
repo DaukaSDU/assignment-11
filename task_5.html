@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+        form {
+            padding: 5px;
+            margin: 5px;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+        li {
+            color: rgb(3, 3, 92);
+            font-size: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            margin: 5px;
+            background-color: rgb(232, 94, 94);
+            border-radius: 10px;
+        }
+        li>span>input, li>button {
+            margin: 0 10px;
+            padding: 5px;
+        }
+        li>button {
+            border-radius: 50%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="app">
+        <form @submit.prevent="add()">
+            <input type="text" placeholder="Write ..." v-model="newTask">
+            <button>add</button>
+        </form>
+        <ul v-for="task in tasks">
+            <li v-if="!task.done"> 
+                <span>
+                    <input type="checkbox" @click="done(task)"> 
+                    {{ task.title }} 
+                </span>
+                <button @click="remove(task)">X</button>
+            </li>
+            <li v-else style="background-color: rgb(111, 218, 111);">
+                <span style="text-decoration: line-through;">{{ task.title }}</span>
+                <button @click="remove(task)">X</button>
+            </li>
+        </ul>
+        <button @click="sort()" style="padding: 5px; margin: 5px;">SORT</button>
+    </div>
+
+    <script>
+        let data = localStorage.getItem('tasks')
+        data = (!data) ? [] : JSON.parse(data)
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    newTask: '',
+                    tasks: data
+                }
+            },
+            methods: {
+                add() {
+                    this.tasks.push({title: this.newTask, done: false})
+                    this.newTask = ''
+                    this.save()
+                },
+                done(task) {
+                    task.done = !task.done
+                    this.save()
+                },
+                remove(task) {
+                    this.tasks = this.tasks.filter(item => item != task)
+                    this.save()
+                },
+                sort() {
+                    this.tasks.sort((a, b) => a.done - b.done)
+                },
+                save() {
+                    localStorage.setItem('tasks', JSON.stringify(this.tasks))
+                }
+            }
+        })
+    </script>
+
+</body>
+</html>

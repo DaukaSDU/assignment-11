@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+<body>
+    <div id="app">
+        <form @submit.prevent="submit" style="display: flex; flex-direction: column; width: 20%; gap: 10px">
+            <input type="text" placeholder="username" v-model="username">
+            <input type="email" placeholder="email" v-model="email">
+            <input type="password" placeholder="password" v-model="password">
+            <button>sign up</button>
+        </form>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    username: '',
+                    email: '',
+                    password: ''
+                }
+            },
+            methods: {
+                submit() {
+                    if (this.check()) {
+                        this.success()
+                    }
+                },
+                check() {
+                    if (!this.username || !this.email || !this.password) {
+                        alert('All fields are required')
+                        return false
+                    } 
+                    if (!this.email.includes('@')) {
+                        alert('Valid email')
+                        return false
+                    }
+                    if (this.password.length <= 4) {
+                        alert('Password should contain at least 5 character')
+                        return false
+                    }
+                    return true
+                },
+                success() {
+                    alert('You have registered successfully!')
+                    this.username = this.email = this.password = ''
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: rgb(0, 132, 255);
+        }
+        #app {
+            background-color: rgba(53, 67, 87);
+            padding: 50px;
+            font-size: 32px;
+            color: rgb(135, 199, 121);
+            border-radius: 10px;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="app">{{ message }}</div>
+
+        <script>
+            const { createApp } = Vue
+        
+            createApp({
+                data() {
+                    return {
+                        message: 'Hello Vue!'
+                    }
+                }
+            }).mount('#app')
+        </script>
+    </div>
+    
+</body>
+</html>
